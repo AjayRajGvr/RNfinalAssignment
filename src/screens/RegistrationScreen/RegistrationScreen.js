@@ -3,8 +3,10 @@ import {Image, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import styles from './RegistrationStyle';
 import auth from '@react-native-firebase/auth';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { GoogleSignin,GoogleSigninButton,
+    statusCodes, } from '@react-native-google-signin/google-signin';
 import Firebase from '../../firebase/config';
+import { useNavigation } from '@react-navigation/native';
 
 GoogleSignin.configure({
   webClientId: '663648135516-rdstleijg0nm1n8o573mi60q4e1uhjh1.apps.googleusercontent.com',
@@ -19,9 +21,10 @@ async function onGoogleButtonPress() {
   const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
   // Sign-in the user with the credential
- // return auth().signInWithCredential(googleCredential);
-  return auth().signInAnonymously();
+  return auth().signInWithCredential(googleCredential);
 }
+
+ 
 
 
 export default function RegistrationScreen({navigation}) {
@@ -29,6 +32,13 @@ export default function RegistrationScreen({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  
+
+
+  
+
+
+
 
   const onFooterLinkPress = () => {
     navigation.navigate('Login');
@@ -119,7 +129,7 @@ export default function RegistrationScreen({navigation}) {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => onGoogleButtonPress().then(() => navigation.navigate('Home'))}>
+          onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}>
           <Text style={styles.buttonTitle}>SignUp with Google</Text>
         </TouchableOpacity>
 
